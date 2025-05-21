@@ -1,5 +1,5 @@
 {
-  "name": "greenleafadvancement/wordpress-civicrm",
+  "name": "greenleafadvancement/civicrm-wordpress",
   "description": "Open source constituent relationship management for non-profits, NGOs and advocacy organizations.",
   "type": "wordpress-plugin",
   "license": "AGPL-3.0",
