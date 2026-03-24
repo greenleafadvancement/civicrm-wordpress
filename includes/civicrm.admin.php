@@ -238,7 +238,8 @@ class CiviCRM_For_WordPress_Admin {
     // phpcs:ignore WordPress.WP.CapitalPDangit.Misspelled
     $_GET['civicrm_install_type'] = 'wordpress';
 
-    $civicrmCore = CIVICRM_PLUGIN_DIR . 'civicrm';
+    global $civicrm_root;
+    $civicrmCore = $civicrm_root ?: CIVICRM_PLUGIN_DIR . 'civicrm';
 
     $setupPaths = [
       implode(DIRECTORY_SEPARATOR, ['vendor', 'civicrm', 'civicrm-setup']),
@@ -416,12 +417,13 @@ class CiviCRM_For_WordPress_Admin {
       return FALSE;
     }
 
-    // Initialize the Class Loader.
-    require_once CIVICRM_PLUGIN_DIR . 'civicrm/CRM/Core/ClassLoader.php';
-    CRM_Core_ClassLoader::singleton()->register();
-
     // Access global defined in "civicrm.settings.php".
     global $civicrm_root;
+
+    // Initialize the Class Loader.
+    // Use $civicrm_root from settings to support Composer/vendor layouts.
+    require_once $civicrm_root . 'CRM/Core/ClassLoader.php';
+    CRM_Core_ClassLoader::singleton()->register();
 
     // Bail if the config file isn't found.
     if (!file_exists($civicrm_root . 'CRM/Core/Config.php')) {
