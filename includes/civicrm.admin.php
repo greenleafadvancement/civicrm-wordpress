@@ -238,7 +238,11 @@ class CiviCRM_For_WordPress_Admin {
     // phpcs:ignore WordPress.WP.CapitalPDangit.Misspelled
     $_GET['civicrm_install_type'] = 'wordpress';
 
-    $civicrmCore = CIVICRM_PLUGIN_DIR . 'civicrm';
+    // GAP: prefer $civicrm_root (set in civicrm.settings.php) so the installer finds
+    // core under vendor/civicrm/civicrm-core in Bedrock/Composer layouts rather than
+    // the hardcoded plugins/civicrm/civicrm path.
+    global $civicrm_root;
+    $civicrmCore = $civicrm_root ?: CIVICRM_PLUGIN_DIR . 'civicrm';
 
     $setupPaths = [
       implode(DIRECTORY_SEPARATOR, ['vendor', 'civicrm', 'civicrm-setup']),
